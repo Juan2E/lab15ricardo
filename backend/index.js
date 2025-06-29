@@ -1,6 +1,9 @@
 const express = require('express');
 const cors = require('cors');
-const productosRoutes = require('./routes/productosRoutes');
+
+const tipoMedicRoutes = require('./routes/tipoMedicRoutes');
+const medicamentoRoutes = require('./routes/medicamentoRoutes');
+
 const sequelize = require('./db');
 
 const app = express();
@@ -8,7 +11,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/productos', productosRoutes);
+// Rutas
+app.use('/api/tipomedic', tipoMedicRoutes);
+app.use('/api/medicamento', medicamentoRoutes);
 
 sequelize.sync()
   .then(() => {

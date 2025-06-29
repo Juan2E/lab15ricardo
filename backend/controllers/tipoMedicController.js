@@ -1,41 +1,41 @@
-const Producto = require('../models/producto');
+const TipoMedic = require('../models/TipoMedic');
 
-// Obtener todos los productos
+// Obtener todos los tipos de medicamento
 exports.getAll = async (req, res) => {
   try {
-    const productos = await Producto.findAll();
-    res.json(productos);
+    const tipos = await TipoMedic.findAll();
+    res.json(tipos);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-// Obtener un solo producto por su código
+// Obtener un tipo de medicamento por su código
 exports.getOne = async (req, res) => {
   try {
-    const producto = await Producto.findByPk(req.params.codProducto);
-    if (!producto) return res.status(404).json({ message: 'No encontrado' });
-    res.json(producto);
+    const tipo = await TipoMedic.findByPk(req.params.CodTipoMed);
+    if (!tipo) return res.status(404).json({ message: 'No encontrado' });
+    res.json(tipo);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-// Crear un nuevo producto
+// Crear un nuevo tipo de medicamento
 exports.create = async (req, res) => {
   try {
-    const nuevo = await Producto.create(req.body);
-    res.status(201).json(nuevo);
+    const nuevoTipo = await TipoMedic.create(req.body);
+    res.status(201).json(nuevoTipo);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-// Actualizar un producto
+// Actualizar un tipo de medicamento
 exports.update = async (req, res) => {
   try {
-    const [actualizado] = await Producto.update(req.body, {
-      where: { codProducto: req.params.codProducto }
+    const [actualizado] = await TipoMedic.update(req.body, {
+      where: { CodTipoMed: req.params.CodTipoMed }
     });
 
     if (actualizado === 0) {
@@ -48,11 +48,11 @@ exports.update = async (req, res) => {
   }
 };
 
-// Eliminar un producto
+// Eliminar un tipo de medicamento
 exports.remove = async (req, res) => {
   try {
-    const eliminado = await Producto.destroy({
-      where: { codProducto: req.params.codProducto }
+    const eliminado = await TipoMedic.destroy({
+      where: { CodTipoMed: req.params.CodTipoMed }
     });
 
     if (!eliminado) {
