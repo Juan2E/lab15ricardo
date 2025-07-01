@@ -1,41 +1,46 @@
-const TipoMedic = require('../models/TipoMedic');
+const Libro = require('../models/Libro');
+const Autor = require('../models/Autor');
 
-// Obtener todos los tipos de medicamento
+// Obtener todos los libros con su autor
 exports.getAll = async (req, res) => {
   try {
-    const tipos = await TipoMedic.findAll();
-    res.json(tipos);
+    const libros = await Libro.findAll({
+      include: { model: Autor }
+    });
+    res.json(libros);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-// Obtener un tipo de medicamento por su código
+// Obtener un libro por su ID con su autor
 exports.getOne = async (req, res) => {
   try {
-    const tipo = await TipoMedic.findByPk(req.params.CodTipoMed);
-    if (!tipo) return res.status(404).json({ message: 'No encontrado' });
-    res.json(tipo);
+    const libro = await Libro.findByPk(req.params.LibroID, {
+      include: { model: Autor }
+    });
+    if (!libro) return res.status(404).json({ message: 'No encontrado' });
+    res.json(libro);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-// Crear un nuevo tipo de medicamento
+// Crear un nuevo libro
 exports.create = async (req, res) => {
   try {
-    const nuevoTipo = await TipoMedic.create(req.body);
-    res.status(201).json(nuevoTipo);
+    const nuevoLibro = await Libro.create(req.body);
+    res.status(201).json(nuevoLibro);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-// Actualizar un tipo de medicamento
+// Actualizar un libro
 exports.update = async (req, res) => {
   try {
-    const [actualizado] = await TipoMedic.update(req.body, {
-      where: { CodTipoMed: req.params.CodTipoMed }
+    const [actualizado] = await Libro.update(req.body, {
+      where: { LibroID: req.params.LibroID }
     });
 
     if (actualizado === 0) {
@@ -48,11 +53,11 @@ exports.update = async (req, res) => {
   }
 };
 
-// Eliminar un tipo de medicamento
+// Eliminar un libro
 exports.remove = async (req, res) => {
   try {
-    const eliminado = await TipoMedic.destroy({
-      where: { CodTipoMed: req.params.CodTipoMed }
+    const eliminado = await Libro.destroy({
+      where: { LibroID: req.params.LibroID }
     });
 
     if (!eliminado) {

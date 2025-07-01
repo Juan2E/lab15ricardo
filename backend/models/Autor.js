@@ -1,20 +1,23 @@
-// models/TipoMedic.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db');
 
-const TipoMedic = sequelize.define('TipoMedic', {
-  CodTipoMed: {
+const Autor = sequelize.define('Autor', {
+  AutorID: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
-  descripcion: {
+  Nombre: {
     type: DataTypes.STRING(100),
     allowNull: false
+  },
+  Nacionalidad: {
+    type: DataTypes.STRING(50),
+    allowNull: true
   }
 }, {
-  tableName: 'TipoMedic',
+  tableName: 'Autores',
   timestamps: false
 });
 
-module.exports = TipoMedic;
+module.exports = Autor;
